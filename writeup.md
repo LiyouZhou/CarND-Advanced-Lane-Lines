@@ -18,10 +18,12 @@ The goals / steps of this project are the following:
 A list of images taken of a chessboard image by the camera used in the car is provided. The corners in the chessboard is detected and their coordinates mapped to the known real world coordinates of the chessboard. We know the real world coordinates of a chessboard are on a plane and on a rectangular grid hence it is easily generated. A transformation matrix can then be obtained. The key functions used are `cv2.findChessboardCorners` and `cv2.calibrateCamera`. Here are the chessboard images before and after calibration:
 
 Before:
-<img src="images/pre_calibration.png" width="600">
+
+<img src="images/pre_calibration.png" width="800">
 
 After:
-<img src="images/post_calibration.png" width="600">
+
+<img src="images/post_calibration.png" width="800">
 
 You can see the transformation undistorted the image such that the lines on the chessboard are now straight.
 
@@ -32,15 +34,18 @@ You can see the transformation undistorted the image such that the lines on the 
 The camera image is transformed such that you get a top down view of the road. This will make subsequent processing a lot easier. To obtain the transformation matrix, a trapezoid is picked on a test image where the lane lines are parallel. The Trapezoid covers the lane area of the road we want to detect. This trapezoid is mapped into a rectangle and the transform matrix obtained using function `cv2.getPerspectiveTransform`. Here are the images before and post perspective transform.
 
 Before Transform
-<img src="images/parallel_image_2.png" width="300">
+
+<img src="images/parallel_image_2.png" width="400">
 
 After Transform
-<img src="images/transformed_parallel_image_2.png" width="300">
+
+<img src="images/transformed_parallel_image_2.png" width="400">
 
 It can be seen that in the second image, the lane lines appears vertical and parallel indicating the transform is correct. The function for perform the transform `cv2.warpPerspective` also does a crop which I defined to exclude most of the area of the image we are not interested in.
 
 Applying transform to test images:
-<img src="images/transform_example.png" width="300">
+
+<img src="images/transform_example.png" width="800">
 
 ### Colour and gradient based filtering
 
@@ -74,7 +79,7 @@ When I did the perspective transformation I measured the width of the lane to be
 
 I evaluate a few points on the fitted lane lines so that a polygon can be drawn to cover the lane areas. The lines are fitted in the transformed perspective. Hence the coordinates of the points need to be transformed back into the camera perspective. This is done by warping using the inverse perspective matrix. The inverse matrix can be obtain by calling `np.linalg.inv`. Example of the final mapped lane area can be seen below:
 
-<img src="images/map_back_to_road.png" width="800">
+<img src="images/map_back_to_road.png" width="400">
 
 ### Masked Search - Avoiding Sliding Window Search on every frame
 
@@ -99,9 +104,7 @@ My implementation is written such that the masked search will be attempted first
 
 ## Video Result
 
-<video width="960" height="540" controls>
-  <source src="test_videos_output/project_video.mp4">
-</video>
+[Link to video](test_videos_output/project_video.mp4)
 
 ## Discussion
 
